@@ -1,9 +1,11 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "include": ["src/**/*", "raycast-env.d.ts"],
   "compilerOptions": {
     // Enable latest features
-    "lib": ["ESNext", "DOM"],
-    "target": "ESNext",
-    "module": "ESNext",
+    "lib": ["ES2023"],
+    "target": "ES2023",
+    "module": "esnext",
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
@@ -18,6 +20,10 @@
     "strict": true,
     "skipLibCheck": true,
     "noFallthroughCasesInSwitch": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
 
     // Some stricter flags (disabled by default)
     "noUnusedLocals": false,
