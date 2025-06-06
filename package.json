@@ -3,7 +3,7 @@
   "name": "cardano-toolbox",
   "title": "Cardano Toolbox",
   "description": "Basic actions for Cardano blockchain network.",
-  "icon": "extension-icon.png",
+  "icon": "cardano-toolbox-icon.png",
   "author": "pa1ar",
   "license": "MIT",
   "module": "index.ts",
