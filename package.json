@@ -26,9 +26,18 @@
       "description": "Select which Cardano network to use",
       "default": "preprod",
       "items": [
-        { "label": "Mainnet", "value": "mainnet" },
-        { "label": "Preprod", "value": "preprod" },
-        { "label": "Preview", "value": "preview" }
+        {
+          "label": "Mainnet",
+          "value": "mainnet"
+        },
+        {
+          "label": "Preprod",
+          "value": "preprod"
+        },
+        {
+          "label": "Preview",
+          "value": "preview"
+        }
       ]
     }
   ],
@@ -37,6 +46,7 @@
     "dev": "ray develop",
     "fix-lint": "ray lint --fix",
     "lint": "ray lint",
+    "create-wallet": "bun run src/create-cardano-wallet.ts",
     "prepublishOnly": "echo \"\\n\\nIt seems like you are trying to publish the Raycast extension to npm.\\n\\nIf you did intend to publish it to npm, remove the \\`prepublishOnly\\` script and rerun \\`npm publish\\` again.\\nIf you wanted to publish it to the Raycast Store instead, use \\`npm run publish\\` instead.\\n\\n\" && exit 1",
     "publish": "npx @raycast/api@latest publish"
   },
@@ -57,8 +67,9 @@
   },
   "dependencies": {
     "@blockfrost/blockfrost-js": "^6.0.0",
-    "dotenv": "^16.5.0",
+    "@meshsdk/core": "^1.9.0-beta.54",
     "@raycast/api": "^1.99.4",
-    "@raycast/utils": "^1.17.0"
+    "@raycast/utils": "^1.17.0",
+    "dotenv": "^16.5.0"
   }
 }
