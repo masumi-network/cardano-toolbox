@@ -80,13 +80,15 @@ bun run create-wallet --network preprod --name my_wallet
 ```
 
 **Parameters:**
-- `--name` (optional): Base name for wallet files (default: "payment")
-- `--network` (optional): Network to use - `testnet`, `mainnet`, `preprod`, or `preview` (default: "testnet")
+- `--name` (optional): Base name for wallet files (default: "wallet")
+- `--network` (optional): Network to use - `testnet`, `mainnet`, `preprod`, or `preview` (default: "preprod")
 
 **Output files:**
 - `TIMESTAMP_NAME.mnemonic` - 24-word mnemonic phrase (keep secure!)
 - `TIMESTAMP_NAME.addr` - Cardano address for receiving payments
 - `TIMESTAMP_NAME.vkey` - Payment verification key hash
+
+**Note:** No .skey files are generated as they're incompatible with MeshSDK. Use .mnemonic files for signing.
 
 **Example:**
 ```bash
@@ -94,9 +96,9 @@ bun run create-wallet --name test_wallet --network preprod
 ```
 
 Creates files like:
-- `cardano_wallets/2025-06-06T1507_test_wallet.mnemonic`
-- `cardano_wallets/2025-06-06T1507_test_wallet.addr`
-- `cardano_wallets/2025-06-06T1507_test_wallet.vkey`
+- `cardano_wallets/2025-06-06-18-41-12-052-test_wallet.mnemonic`
+- `cardano_wallets/2025-06-06-18-41-12-052-test_wallet.addr`
+- `cardano_wallets/2025-06-06-18-41-12-052-test_wallet.vkey`
 
 ### Send ADA
 
@@ -121,26 +123,18 @@ bun run send-ada --recipient <address> --amount <ada> --mnemonic "<phrase>" --ne
 **Parameters:**
 - `--recipient` (required): Cardano address to send ADA to
 - `--amount` (required): Amount of ADA to send (e.g., 10.5)
-- `--skey-file` (optional): Path to .skey file for signing
-- `--skey` (optional): Signing key as JSON string
-- `--mnemonic` (optional): 24-word mnemonic phrase for signing OR path to .mnemonic file
+- `--mnemonic` (required): 24-word mnemonic phrase for signing OR path to .mnemonic file
 - `--network` (optional): Network to use - `mainnet`, `preprod`, or `preview` (uses .env/Raycast preference if not specified)
 
-**Note:** Exactly one signing method must be provided. Priority: `--mnemonic` > `--skey-file` > `--skey`
+**Note:** Use mnemonic files for signing. Legacy .skey support exists but may derive different addresses.
 
 **Examples:**
 ```bash
-# Using skey file
-bun run send-ada --recipient addr_test1qz... --amount 10.5 --skey-file ./cardano_wallets/wallet.skey --network preprod
-
 # Using mnemonic phrase
 bun run send-ada --recipient addr_test1qz... --amount 5.0 --mnemonic "word1 word2 ... word24" --network preprod
 
-# Using mnemonic file
+# Using mnemonic file (recommended)
 bun run send-ada --recipient addr_test1qz... --amount 5.0 --mnemonic ./cardano_wallets/wallet.mnemonic --network preprod
-
-# Using skey string
-bun run send-ada --recipient addr_test1qz... --amount 2.5 --skey '{"type":"PaymentSigningKeyShelley_ed25519",...}' --network preprod
 ```
 
 This project was created using `bun init` in bun v1.2.3. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.

@@ -39,13 +39,14 @@ function createWalletFromSkey(skeyContent: string, network: string, provider: Bl
   
   const networkId = convertNetworkToId(network);
   
+  // Use the raw CBOR hex format that MeshSDK expects for CLI keys
   return new MeshWallet({
     networkId: networkId,
     fetcher: provider,
     submitter: provider,
     key: {
       type: 'cli',
-      payment: privateKeyHex
+      payment: cborHex  // Use full CBOR hex, not just the private key part
     },
   });
 }
