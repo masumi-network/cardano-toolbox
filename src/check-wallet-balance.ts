@@ -46,17 +46,43 @@ async function getWalletBalance(address: string, network: Network, apiKey: strin
 
 async function main() {
   const args = process.argv.slice(2);
-  if (args.length !== 1) {
-    console.error('Usage: bun run check-wallet-balance.ts <wallet_address>');
+  
+  let address = "";
+  let networkOverride = "";
+  
+  // Parse command line arguments
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--address' && i + 1 < args.length) {
+      address = args[i + 1];
+      i++; // Skip next argument
+    } else if (args[i] === '--network' && i + 1 < args.length) {
+      networkOverride = args[i + 1];
+      i++; // Skip next argument
+    } else if (!args[i].startsWith('--')) {
+      // Support legacy positional argument for backward compatibility
+      address = args[i];
+    }
+  }
+
+  if (!address) {
+    console.error('❌ Wallet address is required');
+    console.error('Usage: bun run src/check-wallet-balance.ts --address <wallet_address> [--network <network>]');
+    console.error('   or: bun run check-balance --address <wallet_address> [--network <network>]');
+    console.error('Legacy: bun run src/check-wallet-balance.ts <wallet_address>');
     process.exit(1);
   }
-  const address = args[0];
 
   const { network, apiKey } = await getNetworkAndApiKey();
-  console.log(`💳 Cardano Wallet Balance Checker (${network})`);
-  console.log('='.repeat(50));
-  await getWalletBalance(address, network, apiKey);
-  console.log('\n' + '='.repeat(50));
+  
+  // Use network override if provided and valid
+  const finalNetwork = networkOverride && ['mainnet', 'preprod', 'preview'].includes(networkOverride) 
+    ? networkOverride as Network 
+    : network;
+
+  console.log(`💳 Cardano Wallet Balance Checker (${finalNetwork})`);
+  console.log('='.repeat(70));
+  await getWalletBalance(address, finalNetwork, apiKey);
+  console.log('\n' + '='.repeat(70));
   console.log('✅ Finished.');
 }
 
