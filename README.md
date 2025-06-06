@@ -98,4 +98,49 @@ Creates files like:
 - `cardano_wallets/2025-06-06T1507_test_wallet.addr`
 - `cardano_wallets/2025-06-06T1507_test_wallet.vkey`
 
+### Send ADA
+
+Sends ADA from one wallet to another on Cardano networks using MeshSDK. Supports multiple signing methods and automatic transaction building.
+
+**Features:**
+- Send ADA with automatic fee calculation
+- Multiple signing methods: skey file, skey string, or mnemonic
+- Network support: mainnet, preprod, preview
+- Balance checking before sending
+- Transaction status and explorer links
+
+**Usage:**
+```bash
+# Option 1: Direct command
+bun run src/send-ada.ts --recipient <address> --amount <ada> --skey-file <path> --network preprod
+
+# Option 2: NPM script
+bun run send-ada --recipient <address> --amount <ada> --mnemonic "<phrase>" --network preprod
+```
+
+**Parameters:**
+- `--recipient` (required): Cardano address to send ADA to
+- `--amount` (required): Amount of ADA to send (e.g., 10.5)
+- `--skey-file` (optional): Path to .skey file for signing
+- `--skey` (optional): Signing key as JSON string
+- `--mnemonic` (optional): 24-word mnemonic phrase for signing OR path to .mnemonic file
+- `--network` (optional): Network to use - `mainnet`, `preprod`, or `preview` (uses .env/Raycast preference if not specified)
+
+**Note:** Exactly one signing method must be provided. Priority: `--mnemonic` > `--skey-file` > `--skey`
+
+**Examples:**
+```bash
+# Using skey file
+bun run send-ada --recipient addr_test1qz... --amount 10.5 --skey-file ./cardano_wallets/wallet.skey --network preprod
+
+# Using mnemonic phrase
+bun run send-ada --recipient addr_test1qz... --amount 5.0 --mnemonic "word1 word2 ... word24" --network preprod
+
+# Using mnemonic file
+bun run send-ada --recipient addr_test1qz... --amount 5.0 --mnemonic ./cardano_wallets/wallet.mnemonic --network preprod
+
+# Using skey string
+bun run send-ada --recipient addr_test1qz... --amount 2.5 --skey '{"type":"PaymentSigningKeyShelley_ed25519",...}' --network preprod
+```
+
 This project was created using `bun init` in bun v1.2.3. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
