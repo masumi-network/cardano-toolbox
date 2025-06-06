@@ -8,6 +8,7 @@ compiled_raycast_swift
 node_modules
 
 # output
+wallets
 cardano_wallets
 out
 dist
