@@ -49,6 +49,9 @@
     "create-wallet": "bun run src/create-cardano-wallet.ts",
     "check-balance": "bun run src/check-wallet-balance.ts",
     "send-ada": "bun run src/send-ada.ts",
+    "masumi-payment-create": "bun run src/masumi-payment-create.ts",
+    "masumi-payment-check": "bun run src/masumi-payment-check.ts",
+    "masumi-purchase-create": "bun run src/masumi-purchase-create.ts",
     "prepublishOnly": "echo \"\\n\\nIt seems like you are trying to publish the Raycast extension to npm.\\n\\nIf you did intend to publish it to npm, remove the \\`prepublishOnly\\` script and rerun \\`npm publish\\` again.\\nIf you wanted to publish it to the Raycast Store instead, use \\`npm run publish\\` instead.\\n\\n\" && exit 1",
     "publish": "npx @raycast/api@latest publish"
   },
